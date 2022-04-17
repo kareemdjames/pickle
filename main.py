@@ -1,8 +1,9 @@
 import requests
+import pandas as pd
 
 baseurl = 'https://rickandmortyapi.com/api/'
-
 endpoint = 'character'
+full_list = []
 
 
 def main_request(baseurl, endpoint, page_no):
@@ -28,10 +29,12 @@ def parse_json(response):
     return character_list
 
 
-full_list = []
 data = main_request(baseurl, endpoint, 1)
 for page in range(1, get_pages(data) + 1):
-    print(page)
+    #print(page)
     full_list.extend(parse_json(main_request(baseurl, endpoint, page)))
 
-print(len(full_list))
+df = pd.DataFrame(full_list)
+
+print(df.head(), df.tail())
+

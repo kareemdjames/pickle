@@ -7,7 +7,7 @@ endpoint = 'character'
 
 def main_request(baseurl, endpoint, page_no):
     page_no = f'?page={page_no}'
-    r = requests.get(baseurl + endpoint, + page_no)
+    r = requests.get(baseurl + endpoint + page_no)
     return r.json()
 
 
@@ -28,7 +28,10 @@ def parse_json(response):
     return character_list
 
 
-data = main_request(baseurl, endpoint)
-print(parse_json(data))
+full_list = []
+data = main_request(baseurl, endpoint, 1)
+for page in range(1, get_pages(data) + 1):
+    print(page)
+    full_list.extend(parse_json(main_request(baseurl, endpoint, page)))
 
-
+print(len(full_list))

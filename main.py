@@ -5,8 +5,9 @@ baseurl = 'https://rickandmortyapi.com/api/'
 endpoint = 'character'
 
 
-def main_request(baseurl, endpoint):
-    r = requests.get(baseurl + endpoint)
+def main_request(baseurl, endpoint, page_no):
+    page_no = f'?page={page_no}'
+    r = requests.get(baseurl + endpoint, + page_no)
     return r.json()
 
 

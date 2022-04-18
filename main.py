@@ -1,5 +1,9 @@
+from flask import Flask, render_template
 import requests
 import pandas as pd
+
+
+app = Flask(__name__)
 
 baseurl = 'https://rickandmortyapi.com/api/'
 endpoint = 'character'
@@ -33,6 +37,10 @@ def parse_json(response):
 
     return character_list
 
+@app.route('/')
+def index():
+    return render_template('index.html', charlist=full_list)
+
 try:
     print('Attempting to fetch data')
     data = main_request(baseurl, endpoint, 1)
@@ -50,4 +58,6 @@ except BaseException:
     print('Unable to fetch data')
 
 
+if __name__ == '__main__':
+    app.run(host='127.0.0.1', port=8080, debug=True)
 

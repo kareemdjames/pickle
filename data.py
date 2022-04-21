@@ -29,7 +29,8 @@ def parse_json(response):
         character = {
             'id': item['id'],
             'name': item['name'],
-            'no_of_episodes': len(item['episode'])
+            'no_of_episodes': len(item['episode']),
+            'image': item['image']
         }
 
         character_list.append(character)

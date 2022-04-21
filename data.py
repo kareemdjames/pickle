@@ -8,9 +8,38 @@ baseurl = 'https://rickandmortyapi.com/api/'
 endpoint = 'character'
 full_list = []
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'pickle-347602-fb0b2dc2eb0d.json'
-client = storage.Client()
+storage_client = storage.Client()
 
 
+def set_bucket(bucket_name):
+    my_bucket = storage_client.get_bucket(bucket_name)
+    print(vars(my_bucket))
+
+
+def create_bucket(name):
+    bucket_name = name
+    bucket = storage_client.create_bucket(bucket_name)
+
+
+def upload_blob(bucket_name, source_file_name, destination_blob_name):
+    """Uploads a file to the bucket."""
+    # The ID of your GCS bucket
+    # bucket_name = "your-bucket-name"
+    # The path to your file to upload
+    # source_file_name = "local/path/to/file"
+    # The ID of your GCS object
+    # destination_blob_name = "storage-object-name"
+
+    bucket = storage_client.bucket(bucket_name)
+    blob = bucket.blob(destination_blob_name)
+
+    blob.upload_from_filename(source_file_name)
+
+    print(
+        "File {} uploaded to {}.".format(
+            source_file_name, destination_blob_name
+        )
+    )
 
 
 def main_request(baseurl, endpoint, page_no):
@@ -42,24 +71,24 @@ def parse_json(response):
     return character_list
 
 
-# def start():
-#     try:
-#         print('Attempting to fetch data')
-#         data = main_request(baseurl, endpoint, 1)
-#         for page in range(1, get_pages(data) + 1):
-#             full_list.extend(parse_json(main_request(baseurl, endpoint, page)))
-#         print('Successfully fetched the data')
-#         try:
-#             print("Attempting to create csv")
-#             df = pd.DataFrame(full_list)
-#             df.to_csv('characterlist.csv', index=False)
-#             print('Successfully created csv')
-#         except BaseException:
-#             print('Failed to create csv')
-#     except BaseException:
-#         print('Unable to fetch data')
-#
-#     return full_list
+def start():
+    try:
+        print('Attempting to fetch data')
+        data = main_request(baseurl, endpoint, 1)
+        for page in range(1, get_pages(data) + 1):
+            full_list.extend(parse_json(main_request(baseurl, endpoint, page)))
+        print('Successfully fetched the data')
+        try:
+            print("Attempting to create csv")
+            df = pd.DataFrame(full_list)
+            df.to_csv('characterlist.csv', index=False)
+            print('Successfully created csv')
+        except BaseException:
+            print('Failed to create csv')
+    except BaseException:
+        print('Unable to fetch data')
+
+    return full_list
 
 
 def get_image_urls():
@@ -87,6 +116,5 @@ def download_images(list_of_images):
         else:
             print('Image Couldn\'t be retrieved')
 
-
-#download_images(get_image_urls())
+# download_images(get_image_urls())
 # get_image_urls()

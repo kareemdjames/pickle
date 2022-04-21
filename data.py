@@ -1,11 +1,16 @@
 import shutil
-
 import requests
 import pandas as pd
+import os
+from google.cloud import storage
 
 baseurl = 'https://rickandmortyapi.com/api/'
 endpoint = 'character'
 full_list = []
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'pickle-347602-fb0b2dc2eb0d.json'
+client = storage.Client()
+
+
 
 
 def main_request(baseurl, endpoint, page_no):
@@ -83,5 +88,5 @@ def download_images(list_of_images):
             print('Image Couldn\'t be retrieved')
 
 
-download_images(get_image_urls())
+#download_images(get_image_urls())
 # get_image_urls()

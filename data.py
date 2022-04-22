@@ -19,6 +19,8 @@ def set_bucket(bucket_name):
 def create_bucket(name):
     bucket_name = name
     bucket = storage_client.create_bucket(bucket_name)
+    print(vars(bucket))
+    return bucket
 
 
 def upload_blob(bucket_name, source_file_name, destination_blob_name):
@@ -118,3 +120,4 @@ def download_images(list_of_images):
 
 # download_images(get_image_urls())
 # get_image_urls()
+#upload_blob('pickle_image_bucket', 'Rick Sanchez.jpeg', 'Rick Sanchez')

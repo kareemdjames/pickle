@@ -148,4 +148,4 @@ def download_images(list_of_images):
 # download_images(get_image_urls())
 # get_image_urls()
 #upload_blob('pickle_image_bucket', 'Rick Sanchez.jpeg', 'Rick Sanchez')
-download_blob('pickle_image_bucket', 'Rick Sanchez', 'pickle rick')
+#download_blob('pickle_image_bucket', 'Rick Sanchez', 'pickle rick')
